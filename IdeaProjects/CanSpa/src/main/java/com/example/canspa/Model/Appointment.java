@@ -1,0 +1,81 @@
+package com.example.canspa.Model;
+
+import java.time.LocalTime;
+import java.util.Date;
+
+public class Appointment {
+    private int maLichHen;
+    private String tenKhachHang;
+    private String tenDichVu;
+    private Date ngayHen;
+    private LocalTime gioHen;
+
+    public Appointment() {
+    }
+
+    public Appointment(int maLichHen, String tenKhachHang, String tenDichVu, Date ngayHen, LocalTime gioHen) {
+        this.maLichHen = maLichHen;
+        this.tenKhachHang = tenKhachHang;
+        this.tenDichVu = tenDichVu;
+        this.ngayHen = ngayHen;
+        this.gioHen = gioHen;
+    }
+
+    public Appointment(String tenKhachHang, String tenDichVu, Date ngayHen, LocalTime gioHen) {
+        this.tenKhachHang = tenKhachHang;
+        this.tenDichVu = tenDichVu;
+        this.ngayHen = ngayHen;
+        this.gioHen = gioHen;
+    }
+
+    public int getMaLichHen() {
+        return maLichHen;
+    }
+
+    public void setMaLichHen(int maLichHen) {
+        this.maLichHen = maLichHen;
+    }
+
+    public String getTenKhachHang() {
+        return tenKhachHang;
+    }
+
+    public void setTenKhachHang(String tenKhachHang) {
+        this.tenKhachHang = tenKhachHang;
+    }
+
+    public String getTenDichVu() {
+        return tenDichVu;
+    }
+
+    public void setTenDichVu(String tenDichVu) {
+        this.tenDichVu = tenDichVu;
+    }
+
+    public java.sql.Date getNgayHen() {
+        return new java.sql.Date(ngayHen.getTime()); 
+    }
+
+    public void setNgayHen(Date ngayHen) {
+        this.ngayHen = ngayHen;
+    }
+
+    public LocalTime getGioHen() {
+        return gioHen;
+    }
+
+    public void setGioHen(LocalTime gioHen) {
+        this.gioHen = gioHen;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "maLichHen=" + maLichHen +
+                ", tenKhachHang='" + tenKhachHang + '\'' +
+                ", tenDichVu='" + tenDichVu + '\'' +
+                ", ngayHen=" + ngayHen +
+                ", gioHen=" + gioHen +
+                '}';
+    }
+}
