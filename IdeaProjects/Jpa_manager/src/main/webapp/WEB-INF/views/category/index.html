@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách danh mục</title>
+</head>
+<body>
+<h1>Danh mục</h1>
+<a href="/categories/new">Thêm danh mục mới</a>
+<table border="1" cellpadding="5">
+    <tr><th>ID</th><th>Tên</th><th>Hành động</th></tr>
+    <tr th:each="cat : ${categories}">
+        <td th:text="${cat.id}"></td>
+        <td th:text="${cat.name}"></td>
+        <td>
+            <a th:href="@{'/categories/edit/' + ${cat.id}}">Sửa</a> |
+            <a th:href="@{'/categories/delete/' + ${cat.id}}" onclick="return confirm('Xác nhận xóa?');">Xóa</a>
+        </td>
+    </tr>
+</table>
+<a href="/posts">Quay lại bài viết</a>
+</body>
+</html>

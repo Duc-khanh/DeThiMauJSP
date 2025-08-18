@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Customers</h1>
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<table border="1px" id="customers">
+    <thead>
+    <tr>
+        <td>#</td>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Address</td>
+        <td>Edit</td>
+        <td>Delete</td>
+        <td>View</td>
+    </tr>
+    </thead>
+    <tr th:each="row, rowStat :${customers}">
+        <td th:each="${row.getName()}"></td>
+        <td th:each="${row.getEmail()}"></td>
+        <td th:each="${row.getAddress()}"></td>
+        <td><a th:href="@{/customers/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/customers/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <td><a th:href="@{/customers/{id}/edit(id=${row.getId()})}">edit</a></td>
+    </tr>
+
+</table>
+</body>
+</html>

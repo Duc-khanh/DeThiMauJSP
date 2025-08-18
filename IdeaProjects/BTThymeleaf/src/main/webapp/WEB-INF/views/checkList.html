@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Kiem tra thong tin nguoi dung </h2>
+<p th:if="${user == null}" > Không co thông tin người dùng</p>
+<p th:unless="${user != null}" ></p>
+<p th:text="${user.name}"> </p>
+<p th:text="${user.age}"> </p>
+
+
+</body>
+</html>

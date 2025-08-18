@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/message}" th:object="${address}" method="post">
+    <input type="text" th:field="*{city}" placeholder="Nhap vao day"> <br> <br>
+    <button type="submit">Gui</button>
+</form>
+<p th:text="${result}"></p>
+
+</body>
+</html>

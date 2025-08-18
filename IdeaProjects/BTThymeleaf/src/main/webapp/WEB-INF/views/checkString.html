@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>So sánh</h2>
+<p th:text="'Số hiện tại là   ' + ${number}"></p>
+<p th:if="${number > 10}" > Số lớn hơn 10</p>
+<p th:unless="${number > 10}" >Số bé hơn hoặc = 10</p>
+
+
+</body>
+</html>

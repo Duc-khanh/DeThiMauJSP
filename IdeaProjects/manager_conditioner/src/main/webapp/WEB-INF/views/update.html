@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/conditioners/save}" th:object="${conditioner}" method="post">
+    <p>Name: <input type="text" th:field="*{name}"/></p>
+    <p>Description: <input type="text" th:field="*{description}"/></p>
+    <p>Color: <input type="text" th:field="*{color}"/></p>
+    <p>Price: <input type="text" th:field="*{price}"/></p>
+    <p><input type="submit" value="Create"/></p>
+
+</form>
+
+</body>
+</html>
