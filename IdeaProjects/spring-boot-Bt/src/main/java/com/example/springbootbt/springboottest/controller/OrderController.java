@@ -1,0 +1,69 @@
+package com.example.springbootbt.springboottest.controller;
+
+import com.example.springbootbt.springboottest.model.Order;
+import com.example.springbootbt.springboottest.service.Order.IOrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/orders")
+public class OrderController {
+
+    @Autowired
+    private IOrderService orderService;
+
+    @GetMapping
+    public List<Order> getAllOrders() {
+        return orderService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+        Optional<Order> order = orderService.findById(id);
+        return order.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Order createOrder(@RequestBody Order order) {
+        return orderService.save(order);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order orderDetails) {
+        Optional<Order> orderOpt = orderService.findById(id);
+        if (orderOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Order order = orderOpt.get();
+        order.setCustomerName(orderDetails.getCustomerName());
+        order.setOrderDate(orderDetails.getOrderDate());
+        order.setStatus(orderDetails.getStatus());
+        order.setTotalAmount(orderDetails.getTotalAmount());
+        order.setItems(orderDetails.getItems());
+        Order updatedOrder = orderService.save(order);
+        return ResponseEntity.ok(updatedOrder);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+        orderService.remove(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public List<Order> searchOrders(@RequestParam(required = false) String customerName,
+                                    @RequestParam(required = false) String status) {
+        if (customerName != null) {
+            return orderService.findByCustomerName(customerName);
+        } else if (status != null) {
+            return orderService.findByStatus(status);
+        } else {
+            return orderService.findAll();
+        }
+    }
+}

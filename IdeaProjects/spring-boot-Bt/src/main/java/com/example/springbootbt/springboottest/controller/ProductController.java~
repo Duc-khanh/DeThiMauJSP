@@ -1,0 +1,64 @@
+package com.example.springbootbt.springboottest.controller;
+
+import com.example.springbootbt.springboottest.model.Product;
+import com.example.springbootbt.springboottest.service.product.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/products")
+public class ProductController {
+
+    @Autowired
+    private IProductService productService;
+
+    @GetMapping
+    public List<Product> getAllProducts() {
+        return productService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+        return productService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.save(product);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product productDetails) {
+        return productService.findById(id).map(product -> {
+            product.setName(productDetails.getName());
+            product.setDescription(productDetails.getDescription());
+            product.setPrice(productDetails.getPrice());
+            product.setStockQuantity(productDetails.getStockQuantity());
+            product.setCategory(productDetails.getCategory());
+            product.setSupplier(productDetails.getSupplier());
+            return ResponseEntity.ok(productService.save(product));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        productService.(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search/name")
+    public List<Product> searchByName(@RequestParam String name) {
+        return productService.searchByName(name);
+    }
+
+    @GetMapping("/search/category")
+    public List<Product> searchByCategory(@RequestParam String category) {
+        return productService.searchByCategory(category);
+    }
+}
+

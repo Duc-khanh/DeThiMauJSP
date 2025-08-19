@@ -1,0 +1,72 @@
+package com.example.springbootbt.springboottest.controller;
+
+
+import com.example.springbootbt.springboottest.model.Employee;
+import com.example.springbootbt.springboottest.service.employee.IEmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/employees")
+public class EmployeeController {
+
+    @Autowired
+    private IEmployeeService employeeService;
+
+    // Lấy danh sách nhân viên
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return employeeService.findAll();
+    }
+
+    // Xem chi tiết nhân viên
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
+        return employeeService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Thêm nhân viên
+    @PostMapping
+    public Employee createEmployee(@RequestBody Employee employee) {
+        return employeeService.save(employee);
+    }
+
+    // Sửa thông tin nhân viên
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        return employeeService.findById(id)
+                .map(existing -> {
+                    employee.setEmployeeId(id);
+                    return ResponseEntity.ok(employeeService.save(employee));
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Xoá nhân viên
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+        if (employeeService.findById(id).isPresent()) {
+            employeeService.delete(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // Tìm kiếm nhân viên theo tên
+    @GetMapping("/search/name")
+    public List<Employee> searchByName(@RequestParam String name) {
+        return employeeService.findByName(name);
+    }
+
+    // Tìm kiếm nhân viên theo phòng ban
+    @GetMapping("/search/department")
+    public List<Employee> searchByDepartment(@RequestParam String department) {
+        return employeeService.findByDepartment(department);
+    }
+}
+

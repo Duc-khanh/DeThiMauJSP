@@ -1,0 +1,4 @@
+package com.example.springbootbt.springboottest.model;
+
+public class Product {
+}

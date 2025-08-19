@@ -1,0 +1,4 @@
+package com.example.springbootbt.springboottest.service.employee;
+
+public interface IEmployeeService {
+}
